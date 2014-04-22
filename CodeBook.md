@@ -20,4 +20,4 @@ Dataset is not sorted and test set is simply placed below training set row-wise.
 
 #'Small' tidy dataset (reducedset_mean_sd.txt)
 
-This dataset is created using a tidy dataset described above. It averages all observations corresponding to a specific subject and activity type for every feature. Rows represent features, row names (again) correspond to those described in 'features_info.txt' file. Columns represent a 'subject-activity' pair and are explicitly named as '<SUBJECT>.<ACTIVITY>'.
+This dataset is created using a tidy dataset described above. It averages all observations corresponding to a specific subject and activity type for every feature. Rows represent features, row names (again) correspond to those described in 'features_info.txt' file. Columns represent a 'subject-activity' pair and are explicitly named as '"SUBJECT"."ACTIVITY"'.
