@@ -1,4 +1,4 @@
 Getting-and-Cleaning-Data-Coursera
 ==================================
 
-Submission of final project for a Coursera course on Getting and Cleaning Data by J.Leek
+Submission of a final project for 'Getting and Cleaning Data' course by J.Leek
