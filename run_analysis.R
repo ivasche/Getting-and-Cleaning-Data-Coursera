@@ -1,0 +1,26 @@
+url<-"https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+download.file(url,destfile="project.zip")
+unzip("project.zip",exdir="./project")
+f.names<-read.table("./project/UCI HAR Dataset/features.txt",colClasses="character")[,2]
+a.names<-read.table("./project/UCI HAR Dataset/activity_labels.txt",colClasses="character")[,2]
+if(sum(as.numeric(as.character(as.data.frame(installed.packages())[,1])=="plyr"))==0){install.packages("plyr")}
+library(plyr)
+tr.act<-read.table("./project/UCI HAR Dataset/train/y_train.txt")
+tr.act<-as.data.frame(mapvalues(tr.act[,1],1:6,a.names))
+tr.sub<-read.table("./project/UCI HAR Dataset/train/subject_train.txt")
+tr.feat<-read.table("./project/UCI HAR Dataset/train/X_train.txt")
+train<-cbind(tr.act,tr.sub,tr.feat)
+names(train)<-c("activity","subject",f.names)
+tst.act<-read.table("./project/UCI HAR Dataset/test/y_test.txt")
+tst.act<-as.data.frame(mapvalues(tst.act[,1],1:6,a.names))
+tst.sub<-read.table("./project/UCI HAR Dataset/test/subject_test.txt")
+tst.feat<-read.table("./project/UCI HAR Dataset/test/X_test.txt")
+tst<-cbind(tst.act,tst.sub,tst.feat)
+names(tst)<-c("activity","subject",f.names)
+entire<-rbind(train,tst)
+entire.adj<-cbind(entire[,1:2],entire[,grepl("mean\\()|std\\()",names(entire))])
+write.table(entire.adj,file="./project/entireset_mean_sd.txt",row.names=FALSE)
+factor<-list(as.factor(entire.adj$subject),as.factor(entire.adj$activity))
+entire.adj.sp<-lapply(split(entire.adj,factor),function(x){x[,3:ncol(entire.adj)]})
+reducedset_mean_sd<-as.data.frame(sapply(entire.adj.sp,colMeans))
+write.table(reducedset_mean_sd,file="./project/reducedset_mean_sd.txt")
